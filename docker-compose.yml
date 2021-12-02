@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  dater:
+    build: .
+    container_name: dater
+    ports:
+      - ${GRPC_PORT}:${GRPC_PORT}
+    env_file:
+      - .env
+    networks:
+      - application
+
+networks:
+  application:
+    driver: bridge
