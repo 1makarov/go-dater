@@ -31,7 +31,6 @@ func main() {
 	defer func() {
 		if err = client.Disconnect(ctx); err != nil {
 			log.Println(err)
-			return
 		}
 	}()
 

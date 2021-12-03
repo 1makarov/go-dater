@@ -86,5 +86,23 @@ func (s *ProductService) Fetch(ctx context.Context, v *proto.FetchRequest) (*pro
 }
 
 func (s *ProductService) List(ctx context.Context, v *proto.ListRequest) (*proto.ListResponse, error) {
-	return nil, nil
+	products, err := s.repo.GetByParameters(ctx, repository.ByParameters{
+		Offset: v.Paging.Offset,
+		Limit:  v.Paging.Limit,
+		Entity: v.Sorting.Entity.String(),
+		Sort:   v.Sorting.Sort.String(),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	var protoProducts []*proto.ListProductObject
+	for _, product := range products {
+		protoProducts = append(protoProducts, &proto.ListProductObject{
+			Name:  product.Name,
+			Price: product.Price,
+		})
+	}
+
+	return &proto.ListResponse{Products: protoProducts}, nil
 }

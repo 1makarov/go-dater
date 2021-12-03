@@ -16,8 +16,8 @@ message FetchRequest {
 message empty {}
 
 enum Sort {
-  DESC = 0;
-  ASC = 1;
+  desc = 0;
+  asc = 1;
 }
 
 enum Entity {
@@ -41,7 +41,7 @@ message ListRequest {
 }
 
 message ListProductObject {
-  int64 id = 1;
+  string name = 1;
   int64 price = 2;
 }
 
