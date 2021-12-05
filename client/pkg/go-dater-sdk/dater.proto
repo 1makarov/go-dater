@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "/proto";
+
+service Dater {
+  rpc Fetch(FetchRequest) returns (empty);
+  rpc List(ListRequest) returns (ListResponse);
+}
+
+message FetchRequest {
+  string url = 1;
+}
+
+message empty {}
+
+enum Sort {
+  desc = 0;
+  asc = 1;
+}
+
+enum Entity {
+  Name = 0;
+  Price = 1;
+}
+
+message ListSortingStruct {
+  Sort sort = 1;
+  Entity entity = 2;
+}
+
+message ListPagingStruct {
+  int64 offset = 1;
+  int64 limit = 2;
+}
+
+message ListRequest {
+  ListSortingStruct sorting = 1;
+  ListPagingStruct paging = 2;
+}
+
+message ListProductObject {
+  string Name = 1;
+  int64 Price = 2;
+}
+
+message ListResponse {
+  repeated ListProductObject products = 1;
+}
