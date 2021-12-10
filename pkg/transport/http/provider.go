@@ -13,9 +13,7 @@ type Provider struct {
 }
 
 func New() *Provider {
-	return &Provider{
-		http: http.DefaultClient,
-	}
+	return &Provider{http: http.DefaultClient}
 }
 
 func (p *Provider) Get(url string, answer interface{}) error {
@@ -42,7 +40,7 @@ func (p *Provider) do(method, url string, body []byte, answer interface{}) error
 		return fmt.Errorf("error request from client provider: %w", err)
 	}
 
-	if req.StatusCode >= 400 {
+	if req.StatusCode >= 300 {
 		return fmt.Errorf("error request, statuscode: %d", req.StatusCode)
 	}
 
@@ -60,7 +58,6 @@ func (p *Provider) do(method, url string, body []byte, answer interface{}) error
 	switch answer.(type) {
 	case *string:
 		*answer.(*string) = string(body)
-	case nil:
 	default:
 		if err = jsoniter.Unmarshal(body, answer); err != nil {
 			return fmt.Errorf("error unmashal json from provider: %w", err)

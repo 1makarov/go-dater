@@ -1,4 +1,4 @@
-package get
+package getter
 
 import (
 	"github.com/1makarov/go-dater/server/internal/types"

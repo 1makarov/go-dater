@@ -2,7 +2,7 @@ package services
 
 import (
 	"context"
-	get "github.com/1makarov/go-dater/server/internal/getter"
+	"github.com/1makarov/go-dater/server/internal/getter"
 	"github.com/1makarov/go-dater/server/internal/repository"
 	"github.com/1makarov/go-dater/server/internal/types"
 )
@@ -16,8 +16,8 @@ type Products interface {
 	List(ctx context.Context, input types.GetByParametersInput) ([]types.Product, error)
 }
 
-func New(repo *repository.Repository, getter *get.Client) *Services {
+func New(repo *repository.Repository, get *getter.Client) *Services {
 	return &Services{
-		Products: newProductService(repo.Products, getter),
+		Products: newProductService(repo.Products, get),
 	}
 }

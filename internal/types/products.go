@@ -1,8 +1,8 @@
 package types
 
 type Product struct {
-	Name  string `json:"Name" bson:"Name"`
-	Price int64  `bson:"Price" bson:"Price"`
+	Name  string `bson:"Name"`
+	Price int64  `bson:"Price"`
 }
 
 type GetByParametersInput struct {

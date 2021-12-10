@@ -20,7 +20,8 @@ func (c *Client) List(ctx context.Context, i ParamInput) (products []Product, er
 		Sorting: &proto.ListSortingStruct{
 			Sort:   proto.Sort(i.Sort),
 			Entity: proto.Entity(i.Entity),
-		}, Paging: &proto.ListPagingStruct{
+		},
+		Paging: &proto.ListPagingStruct{
 			Offset: i.Offset,
 			Limit:  i.Limit,
 		},

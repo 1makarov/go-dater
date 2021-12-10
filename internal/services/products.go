@@ -10,13 +10,13 @@ import (
 
 type ProductsService struct {
 	repo   *repository.ProductsRepository
-	getter *get.Client
+	getter *getter.Client
 }
 
-func newProductService(repo *repository.ProductsRepository, getter *get.Client) *ProductsService {
+func newProductService(repo *repository.ProductsRepository, get *getter.Client) *ProductsService {
 	return &ProductsService{
 		repo:   repo,
-		getter: getter,
+		getter: get,
 	}
 }
 

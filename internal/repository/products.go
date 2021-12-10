@@ -7,14 +7,17 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+const (
+	ascSort  = "asc"
+	descSort = "desc"
+)
+
 type ProductsRepository struct {
 	db *mongo.Collection
 }
 
 func newProductsRepo(db *mongo.Collection) *ProductsRepository {
-	return &ProductsRepository{
-		db: db,
-	}
+	return &ProductsRepository{db: db}
 }
 
 func (r *ProductsRepository) Create(ctx context.Context, v *types.Product) error {
@@ -38,17 +41,16 @@ func (r *ProductsRepository) GetAll(ctx context.Context) (*types.Products, error
 }
 
 func (r *ProductsRepository) GetByParameters(ctx context.Context, p types.GetByParametersInput) (products []types.Product, err error) {
-	opts := getPaginationOpts(p.Offset, p.Limit)
 	query := bson.M{}
 
 	switch p.Sort {
-	case "asc":
+	case ascSort:
 		query[p.Entity] = 1
-	case "desc":
+	case descSort:
 		query[p.Entity] = -1
 	}
 
-	opts.SetSort(query)
+	opts := getPaginationOpts(p.Offset, p.Limit).SetSort(query)
 
 	result, err := r.db.Find(ctx, bson.D{}, opts)
 	if err != nil {

@@ -21,7 +21,7 @@ func main() {
 	ctx := context.Background()
 	cfg := config.Init()
 
-	clientMongoDB, err := mongodb.Open(ctx, mongodb.Input{
+	clientMongoDB, err := mongodb.DialContext(ctx, mongodb.Input{
 		Host:     cfg.DB.Host,
 		User:     cfg.DB.User,
 		Password: cfg.DB.Password,
@@ -39,8 +39,8 @@ func main() {
 
 	db := clientMongoDB.Database(cfg.DB.Name)
 	repo := repository.New(db)
-	getter := get.New()
-	service := services.New(repo, getter)
+	get := getter.New()
+	service := services.New(repo, get)
 	handler := grpcHandler.NewHandler(service)
 	server := grpcServer.New(handler)
 	defer server.Stop()
